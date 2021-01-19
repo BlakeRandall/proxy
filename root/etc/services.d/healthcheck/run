@@ -1,0 +1,7 @@
+#!/usr/bin/with-contenv bash
+
+if [[ ! -z "${HEALTHCHECK_ID}" ]]; then
+    exec bash -c -- 'sleep 15; while true; do echo "Healthcheck ${HEALTHCHECK_ID}"; curl --silent --show-error --request GET --location --retry 3 --retry-delay 5 --retry-max-time 5 --max-time 5 https://hc-ping.com/${HEALTHCHECK_ID} 1>/dev/null 2>&1; if [[ ! $? -eq 0 ]]; then echo "Healthcheck Failed"; exit 1; fi; sleep 60; done;'
+else
+    exec bash -c -- 'sleep 15; while true; do echo "Healthcheck disabled"; sleep infinity; done;'
+fi

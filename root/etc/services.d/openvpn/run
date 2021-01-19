@@ -1,0 +1,6 @@
+#!/usr/bin/with-contenv bash
+if [[ ${OVPN:-0} -eq 1 ]]; then
+    exec openvpn --config ${OVPN_CONFIG:-/etc/openvpn/config.ovpn} --auth-user-pass ${OVPN_CREDENTIALS:-/etc/openvpn/credentials.txt}
+else
+    exec bash -c -- 'sleep 15; while true; do sleep infinity; done;'
+fi

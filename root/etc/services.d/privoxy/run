@@ -1,0 +1,2 @@
+#!/usr/bin/with-contenv bash
+exec privoxy --no-daemon ${PRIVOXY_CONFIG:-/etc/privoxy/config}
