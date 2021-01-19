@@ -1,0 +1,5 @@
+#!/usr/bin/with-contenv bash
+iptables --flush
+iptables --delete-chain
+iptables -t nat --flush
+iptables -t nat --delete-chain

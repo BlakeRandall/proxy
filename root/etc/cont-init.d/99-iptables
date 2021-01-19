@@ -1,0 +1,22 @@
+#!/usr/bin/with-contenv bash
+
+iptables --flush
+iptables --delete-chain
+iptables -t nat --flush
+iptables -t nat --delete-chain
+
+iptables -P OUTPUT DROP
+iptables -A INPUT -j ACCEPT -i lo
+iptables -A OUTPUT -j ACCEPT -o lo
+iptables -A INPUT --src 10.0.0.0/8 -j ACCEPT -i eth0
+iptables -A OUTPUT -d 10.0.0.0/8 -j ACCEPT -o eth0
+iptables -A INPUT --src 172.16.0.0/12 -j ACCEPT -i eth0
+iptables -A OUTPUT -d 172.16.0.0/12 -j ACCEPT -o eth0
+iptables -A INPUT --src 192.168.0.0/16 -j ACCEPT -i eth0
+iptables -A OUTPUT -d 192.168.0.0/16 -j ACCEPT -o eth0
+iptables -A OUTPUT -j ACCEPT -o eth0 -p udp --dport 1194
+iptables -A INPUT -j ACCEPT -i eth0 -p udp --sport 1194
+iptables -A OUTPUT -j ACCEPT -o eth0 -p tcp --dport 1194
+iptables -A INPUT -j ACCEPT -i eth0 -p tcp --sport 1194
+iptables -A INPUT -j ACCEPT -i tun0
+iptables -A OUTPUT -j ACCEPT -o tun0

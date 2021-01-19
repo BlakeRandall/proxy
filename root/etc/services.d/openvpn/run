@@ -1,0 +1,2 @@
+#!/usr/bin/with-contenv bash
+exec openvpn --config ${OVPN_CONFIG:-/etc/openvpn/config.ovpn} --auth-user-pass ${OVPN_CREDENTIALS:-/etc/openvpn/credentials.txt}
